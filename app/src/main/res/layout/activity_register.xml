@@ -28,13 +28,27 @@
         android:text="@string/best"
         android:textColor="@color/colorNameDescription"
         tools:textSize="@dimen/_16sdp" />
+    <EditText
+        android:id="@+id/edt_username"
+        android:layout_width="@dimen/_240sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/edit_round"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:drawableLeft="@drawable/ic_email"
+        android:paddingLeft="@dimen/_15sdp"
+        android:drawablePadding="@dimen/_15sdp"
+        android:hint="@string/username"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorTextSearch"
+        android:textColorHint="@color/colorTextSearch"
+        android:textSize="@dimen/_14sdp" />
 
     <EditText
         android:id="@+id/edt_sigup_mail"
         android:layout_width="@dimen/_240sdp"
         android:layout_height="@dimen/_40sdp"
         android:background="@drawable/edit_round"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:drawableLeft="@drawable/ic_user"
         android:paddingLeft="@dimen/_15sdp"
         android:drawablePadding="@dimen/_15sdp"
