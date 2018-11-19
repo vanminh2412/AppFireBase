@@ -95,12 +95,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //anh xa
-    private void initview() {
-        edtEmail = findViewById(R.id.edt_mail);
+    private void initview() {edtEmail = findViewById(R.id.edt_mail);
         edtPassword = findViewById(R.id.edt_password);
         btnFogotPass = findViewById(R.id.btn_reset_password);
         btnLogin = findViewById(R.id.btn_login);
         btnSigup = findViewById(R.id.btn_sigup);
         progressBar = findViewById(R.id.progressBar);
+
     }
 }

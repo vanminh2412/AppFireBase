@@ -10,7 +10,6 @@ import com.product.appfirebase.R;
 
 public class NewsFragment extends Fragment {
 
-
     public NewsFragment(){
 
     }

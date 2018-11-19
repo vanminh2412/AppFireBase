@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".fragment.MessageFragment">
 
+    <TextView
+        android:text="Message"
+        android:background="@color/ColorTextLogin"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_message"
         android:layout_width="match_parent"
