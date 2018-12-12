@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">AppFireBase</string>
+    <string name="app_name">MiniChat</string>
     <string name="stt">28/108</string>
     <string name="email">Email address</string>
-    <string name="passwood">password</string>
+    <string name="passwood">Password</string>
     <string name="best">Best place to find review</string>
     <string name="register">Register</string>
     <string name="youremail">Email Address</string>
@@ -14,7 +14,7 @@
     <string name="fogot_password">Forgot Password?</string>
     <string name="fogot_pass_message">We just need your registered Email Id to send you Password reset instructions</string>
     <string name="reset">Reset Password</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">MiniChat</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

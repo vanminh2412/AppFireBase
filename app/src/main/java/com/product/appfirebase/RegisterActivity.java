@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,128 +19,103 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText edtEmail,edtPassword,edtUsername;
-    private Button btnSigin, btnSigUp,btnFogotPass;
-    private ProgressBar progressBar;
-    private FirebaseAuth auth;
-    private DatabaseReference reference;
+    MaterialEditText username, email, password;
+    Button btn_register;
+
+    FirebaseAuth auth;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        inite();
-        clickButton();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        progressBar.setVisibility(View.GONE);
-    }
-
-    // xu ly su kien
-    private void clickButton() {
-        // reset password
-        btnFogotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentFogot = new Intent(RegisterActivity.this,ForgotPasswordActivity.class);
-                startActivity(intentFogot);
-            }
-        });
-
-        // Login
-        btnSigin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        //Sigup
-        btnSigUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = edtUsername.getText().toString().trim();
-                String email = edtEmail.getText().toString().trim();
-                String password = edtPassword.getText().toString().trim();
-                //check validate
-                if (TextUtils.isEmpty(username)){
-                    Toast.makeText(getApplicationContext(),"Enter username",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplicationContext(),"Enter email",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(),"Enter password",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (password.length()<6){
-                    Toast.makeText(getApplicationContext(),"Password too short, enter minimum 6 characters!",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //hien progetbar
-                progressBar.setVisibility(View.VISIBLE);
-                //creat user
-                register(username, email, password);
-
-            }
-        });
+        toolbar();
+        initviews();
 
     }
 
-    private void register(final String username, String email, String password) {
-        auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+
+
+    private void initviews() {
+        username = findViewById(R.id.username);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        btn_register = findViewById(R.id.btn_register);
+
+        auth = FirebaseAuth.getInstance();
+
+
+
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String txt_username = username.getText().toString();
+                String txt_email = email.getText().toString();
+                String txt_password = password.getText().toString();
+
+                if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
+                    Toast.makeText(RegisterActivity.this, "Bạn cần điền đủ thông tin!!", Toast.LENGTH_SHORT).show();
+                } else if (txt_password.length() < 6 ){
+                    Toast.makeText(RegisterActivity.this, "Mật khẩu không được dưới 6 chữ!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    register(txt_username, txt_email, txt_password);
+                }
+            }
+        });
+    }
+
+
+
+    private void toolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Register");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
+
+    private void register(final String username, String email, String password){
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(RegisterActivity.this,"Creat user complete" + task.isSuccessful(),Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                        //thong bao dang nhap
-                        if (!task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this,"Authentication failed."+task.getException(),Toast.LENGTH_SHORT).show();
-                        }else {
-                            FirebaseUser user = auth.getCurrentUser();
-                            assert user != null;
-                            String userID = user.getUid();
-                            reference = FirebaseDatabase.getInstance().getReference("user").child(userID);
-                            HashMap<String,String> hashMap = new HashMap<>();
-                            hashMap.put("id",userID);
-                            hashMap.put("username",username);
-                            hashMap.put("image","");
+                        if (task.isSuccessful()){
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                            assert firebaseUser != null;
+                            String userid = firebaseUser.getUid();
+
+                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", userid);
+                            hashMap.put("username", username);
+                            hashMap.put("imageURL", "default");
+                            hashMap.put("status", "offline");
+                            hashMap.put("search", username.toLowerCase());
+
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    Intent intentMain = new Intent(RegisterActivity.this,MainActivity.class);
-                                    startActivity(intentMain);
-                                    finish();
+                                    if (task.isSuccessful()){
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
                             });
-
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Email đã được đăng ký!!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
-    //anh xa
-    private void inite() {
-        edtEmail = findViewById(R.id.edt_sigup_mail);
-        edtPassword = findViewById(R.id.edt_sigup_password);
-        edtUsername = findViewById(R.id.edt_username);
-        btnSigin = findViewById(R.id.btn_login);
-        btnSigUp = findViewById(R.id.btn_sigup);
-        btnFogotPass = findViewById(R.id.btn_reset_password);
-        progressBar = findViewById(R.id.progressBar);
-        auth = FirebaseAuth.getInstance();
-    }
-
-
 }

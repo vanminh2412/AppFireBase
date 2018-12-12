@@ -1,38 +1,60 @@
 package com.product.appfirebase.model;
 
 public class User {
-    String userID,userName,imageUser;
+    private String id;
+    private String username;
+    private String imageURL;
+    private String status;
+    private String search;
 
     public User() {
     }
 
-    public User(String userID, String userName, String imageUser) {
-        this.userID = userID;
-        this.userName = userName;
-        this.imageUser = imageUser;
+    public User(String id, String username, String imageURL, String status, String search) {
+        this.id = id;
+        this.username = username;
+        this.imageURL = imageURL;
+        this.status = status;
+        this.search = search;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getId() {
+        return id;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getImageUser() {
-        return imageUser;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageUser(String imageUser) {
-        this.imageUser = imageUser;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

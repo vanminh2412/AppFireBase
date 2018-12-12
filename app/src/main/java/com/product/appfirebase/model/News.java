@@ -1,38 +1,46 @@
 package com.product.appfirebase.model;
 
-public class News {
-    String textnew,imageNews,newsId;
+import com.google.firebase.database.Exclude;
 
+public class News {
+    String mTextnew,mImageNews;
+    private String mKey;
     public News() {
     }
 
-    public News(String textnew, String imageNews, String newsId) {
-        this.textnew = textnew;
-        this.imageNews = imageNews;
-        this.newsId = newsId;
+    public News(String textnew, String imageNews) {
+        if (textnew.trim().equals("")){
+            textnew = "No Name";
+        }
+        mTextnew = textnew;
+        mImageNews = imageNews;
     }
 
-    public String getNewsId() {
-        return newsId;
+
+
+    public String getmTextnew() {
+        return mTextnew;
     }
 
-    public void setNewsId(String newsId) {
-        this.newsId = newsId;
+    public void setmTextnew(String mtextnew) {
+        this.mTextnew = mtextnew;
     }
 
-    public String getTextnew() {
-        return textnew;
+    public String getmImageNews() {
+        return mImageNews;
     }
 
-    public void setTextnew(String textnew) {
-        this.textnew = textnew;
+    public void setmImageNews(String mImageNews) {
+        this.mImageNews = mImageNews;
     }
 
-    public String getImageNews() {
-        return imageNews;
+    @Exclude
+    public String getKey() {
+        return mKey;
     }
 
-    public void setImageNews(String imageNews) {
-        this.imageNews = imageNews;
+    @Exclude
+    public void setKey(String key) {
+        mKey = key;
     }
 }
