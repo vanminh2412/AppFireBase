@@ -31,13 +31,17 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-
-    implementation 'com.google.firebase:firebase-core:11.0.0'
-    implementation 'com.google.firebase:firebase-auth:11.0.0'
-    implementation 'com.google.firebase:firebase-storage:11.0.0'
-    implementation 'com.google.firebase:firebase-messaging:11.0.0'
-    implementation 'com.google.firebase:firebase-database:11.0.0'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-auth:11.8.0'
+    implementation 'com.google.firebase:firebase-storage:11.8.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation 'com.google.firebase:firebase-database:11.8.0'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
+    implementation 'com.google.firebase:firebase-firestore:11.8.0'
+
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.6.+'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'id.zelory:compressor:2.1.0'
 
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'de.hdodenhof:circleimageview:2.2.0'

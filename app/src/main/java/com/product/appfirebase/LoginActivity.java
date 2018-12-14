@@ -37,8 +37,8 @@ public class LoginActivity extends AppCompatActivity {
 
         initview();
         onclickButton();
-    }
 
+    }
     //xu ly su kien
     private void onclickButton() {
         auth = FirebaseAuth.getInstance();

@@ -1,15 +1,11 @@
 package com.product.appfirebase;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,8 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,19 +37,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.product.appfirebase.fragment.ChangePasswordFragment;
+import com.product.appfirebase.fragment.HomeFragment;
 import com.product.appfirebase.fragment.MessageFragment;
-import com.product.appfirebase.fragment.NewsFragment;
 import com.product.appfirebase.model.User;
-import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.security.AccessController;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (savedInstanceState == null){
-            NewsFragment newsFragment = new NewsFragment();
+            HomeFragment newsFragment = new HomeFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.framlayout,newsFragment).commit();
         }
 
@@ -230,11 +218,12 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-            fragment = new NewsFragment();
+            fragment = new HomeFragment();
         } else if (id == R.id.nav_messege) {
             fragment = new MessageFragment();
         } else if (id == R.id.nav_setting) {
-            fragment = new ChangePasswordFragment();
+            Intent intentSetup = new Intent(MainActivity.this,SetupActivity.class);
+            startActivity(intentSetup);
 
         } else if (id == R.id.nav_sigout) {
             auth.signOut();
@@ -242,7 +231,7 @@ public class MainActivity extends AppCompatActivity
             finish();
         }
         if (fragment !=null){
-            NewsFragment newsFragment = new NewsFragment();
+            HomeFragment newsFragment = new HomeFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.framlayout,fragment);
